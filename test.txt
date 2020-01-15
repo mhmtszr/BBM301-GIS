@@ -1,0 +1,211 @@
+function Location getUserLocation(User user) {
+	return getlocation(user);
+}
+
+function User Register(){
+	string name = getinput("What is your name?");
+	string home = getinput("Where do you live?");
+	string work = getinput("Where do you work?");
+
+	User user = new User(name, home, work);
+	return user;
+}
+
+
+
+function void showRoad(Graph map, ThreeDObject workObject, ThreeDObject car){
+	if(user != 0 && workObject != 0 && car != 0){
+		drawOut(map, workObject, car);
+	}
+	
+}
+
+
+function int main(void) {
+
+	printGis("Data types, variables, loop etc. test");
+
+    int i = 6;
+    i =+ 2;
+    i =- 1;
+    i =* 3;
+    i =/ 6;
+    i =^ 7;
+    
+    i++;
+    i--;
+	
+	int j = 50 * 3 + 7 * 7 ** 3;
+	
+    if(i <= 5) {
+        printGis("i is less than or equal to 5");
+    }
+
+    if(i != 5) {
+        printGis("i is not 5");
+    }
+
+    array int arr1[6] = {1, 2, 3, 4, 5, 6};
+
+    for(int j = 0; j < 6; j++) {
+        printGis("%d\n", j);
+    }
+
+    i = 0;
+
+    while(i < 6) {
+        if(i < 4) {
+            break;
+        }
+        if(i == 3) {
+            continue;
+        }
+        printGis("%d\n", i);
+        i++;
+    }
+
+    i = 0;
+
+    do {
+        printGis("%d\n", i);
+        i++;
+    } while(i < 6);
+
+    i = 0;
+
+    while(i < 6) {
+        switch(arr1[i]) {
+            case 1:
+                printGis("%d. element is 1", i);
+                break;
+            case 2:
+                printGis("%d. element is 1", i);
+                break;
+            case 3:
+                printGis("%d. element is 1", i);
+                break;
+            case 4:
+                printGis("%d. element is 1", i);
+                break;
+            case 5:
+                printGis("%d. element is 1", i);
+                break;
+            case 6:
+                printGis("%d. element is 1", i);
+                break;
+            default:
+                printGis("I don't know the element");
+        }
+
+        i++;
+    }
+
+    i = 4;
+    int j = 6;
+
+    if(i == 4 && j == 6) {
+        printGis("i is 4 and j is 6");
+    }
+
+    if(i == 4 || j == 6) {
+        printGis("i is 4 or j is 6");
+    }
+
+    char c = 'c';
+
+    float a = 5.44;
+    float b = -23.56;
+
+    bool d = true;
+    bool e = !d;
+
+    if(!e){
+        printGis("bool expressions work!");
+    }
+
+	printGis("Test finish, start GIS++ :)");
+
+	User user;
+	Graph map = new Graph(getTurkeyMap());
+	ThreeDObject carObj = new ThreeDObject("MyCar");
+	ThreeDObject homeObj = new ThreeDObject("MyHome");
+	ThreeDObject workObj = new ThreeDObject("Work");
+	ThreeDObject anotherObj = new ThreeDObject("AnotherTarget");
+
+	if(user.register == false){
+		user = Register();
+	}
+
+	Location homeLoc = searchlocation(map, home);
+	Location workLoc = searchlocation(map, work);
+	Location current = getUserLocation(map, user);
+
+	if(current == homeLoc){
+		string target = getinput("Do you want to go to work or another target?");
+		showtarget(target);
+		if(target == "work"){
+			Road road = new Road(current, workLoc);
+			showonmap(workLoc.longitude , workLoc.latitude);
+			printGis("A route created to work.");
+			printGis("Road speed: ", getroadspeed(road));
+			printGis("Remaining time: ", getridetime(road));
+			showRoad(map,workObject,car);
+		}else{
+			Location targetLoc = searchlocation(map, target);
+			showonmap(targetLoc.longitude, targetLoc.latitude);
+			Road road = new Road(current, targetLoc);
+			printGis("A route created to ", target);
+			printGis("Road speed: ", getroadspeed(road));
+			printGis("Remaining time: ", getridetime(road));
+			showRoad(map,anotherObj,car);
+		}
+	}
+	else if(current == workLoc){
+		string target = getinput("Do you want to go to home or another target?");
+		showtarget(target);
+		if(target == "home"){
+			Road road = new Road(current, homeLoc);
+			showonmap(homeLoc.longitude , homeLoc.latitude);
+			printGis("A route created to home.");
+			printGis("Road speed: ", getroadspeed(road));
+			printGis("Remaining time: ", getridetime(road));
+			showRoad(map,homeObject,car);
+		}else{
+			Location targetLoc = searchlocation(map, target);
+			showonmap(targetLoc.longitude, targetLoc.latitude);
+			Road road = new Road(current, targetLoc);
+			printGis("A route created to ", target);
+			printGis("Road speed: ", getroadspeed(road));
+			printGis("Remaining time: ", getridetime(road));
+			showRoad(map, road, anotherObj, car);
+		}
+	}
+	else{
+		string target = getinput("Do you want to go to home or work or another target?");
+		showtarget(target);
+		if(target == "home"){
+			Road road = new Road(current, homeLoc);
+			showonmap(homeLoc.longitude , homeLoc.latitude);
+			printGis("A route created to home.");
+			printGis("Road speed: ", getroadspeed(road));
+			printGis("Remaining time: ", getridetime(road));
+			showRoad(map, road, homeObject, car);
+		}else if(target == "work"){
+			Road road = new Road(current, workLoc);
+			showonmap(workLoc.longitude , workLoc.latitude);
+			printGis("A route created to work.");
+			printGis("Road speed: ", getroadspeed(road));
+			printGis("Remaining time: ", getridetime(road));
+			showRoad(map, road, workObject, car);
+		}else{
+			Location targetLoc = searchlocation(map, target);
+			showonmap(targetLoc.longitude, targetLoc.latitude);
+			Road road = new Road(current, targetLoc);
+			printGis("A route created to ", target);
+			printGis("Road speed: ", getroadspeed(road));
+			printGis("Remaining time: ", getridetime(road));
+			showRoad(map, road, anotherObj, car);
+		}
+	}
+	return 0;
+}
