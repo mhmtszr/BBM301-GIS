@@ -1,2 +1,2 @@
-# BBM301-GIS-
+# BBM301-GIS
 BBM301 - Programming Languages Course Project 
